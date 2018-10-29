@@ -1,4 +1,20 @@
 
+function Queue(){
+  this.queue = [];
+}
+Queue.prototype.enQueue = function(value){
+  this.queue.push(value);
+  return this.queue;
+}
+Queue.prototype.deQueue = function(){
+  let tmpVal = this.queue[0];
+  this.queue.splice(0,1);
+  return tmpVal;
+}
+
+
+
+
 function BinarySearchTree(value){
   this.value = value;
   this.left = null;
@@ -99,11 +115,32 @@ BinarySearchTree.prototype.Postorder = function(){
 
 }
 
-
+BinarySearchTree.prototype.breadthFirstSearch = function(){
+  let q= new Queue();
+  q.enQueue(this.left);
+  q.enQueue(this.right);
+  while(q.queue.length){
+    let Qvalue = q.deQueue();
+    if(Qvalue){
+      console.log(Qvalue.value)
+      if(Qvalue.left){
+        q.enQueue(Qvalue.left);
+      }
+      if(Qvalue.right){
+        q.enQueue(Qvalue.right);
+      }
+    }
+  }
+}
 let x = new BinarySearchTree(12);
 min = Math.ceil(1);
 max = Math.floor(100);
-for(let i=0;i<40;i++){
- x.insert(Math.floor(Math.random() * (max - min)) + min);
-}
-console.log(x.Postorder())
+x.insert(5);
+x.insert(2);
+x.insert(3);
+x.insert(6);
+x.insert(7);
+// for(let i=0;i<40;i++){
+//  x.insert(Math.floor(Math.random() * (max - min)) + min);
+// }
+console.log(x.breadthFirstSearch())
