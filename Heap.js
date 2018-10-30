@@ -15,22 +15,23 @@ MinHeap.prototype.swap = function(arr, i){
 }
 
 MinHeap.prototype.Heapify = function(){
-  for(let i=0;i<this.heap.length;i++){
-    // let parent = (i-1)/2;
-    while(this.heap[i] < this.heap[Math.floor((i-1)/2)]){
+  for(let i=this.heap.length;i>0;i--){
+    let tmpCount = i;
+    while(tmpCount > 0 && this.heap[tmpCount] < this.heap[Math.floor((tmpCount-1)/2)]){
       this.swap(this.heap, i);
+      tmpCount = Math.floor((tmpCount-1)/2);
     }
   }
 }
 MinHeap.prototype.insert = function(value){
   this.heap.push(value);
-  this.Heapify();
 }
 
 let x = new MinHeap();
 min = Math.ceil(1);
 max = Math.floor(100);
-for(let i=0;i<40;i++){
+for(let i=0;i<10;i++){
  x.insert(Math.floor(Math.random() * (max - min)) + min);
 }
+x.Heapify()
 console.log(x.heap)
