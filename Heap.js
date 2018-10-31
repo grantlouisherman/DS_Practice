@@ -15,16 +15,29 @@ MinHeap.prototype.swap = function(arr, i){
 }
 
 MinHeap.prototype.Heapify = function(){
-  for(let i=this.heap.length;i>0;i--){
-    let tmpCount = i;
-    while(tmpCount > 0 && this.heap[tmpCount] < this.heap[Math.floor((tmpCount-1)/2)]){
-      this.swap(this.heap, i);
-      tmpCount = Math.floor((tmpCount-1)/2);
+  let heap = this.heap
+  let count = this.heap.length;
+  while(count > 0){
+    let parent = Math.floor((count-1)/2);
+    if(heap[count] < heap[parent]){
+      this.swap(heap, count);
+      count = this.heap.length;
+    } else{
+      count--;
     }
   }
 }
 MinHeap.prototype.insert = function(value){
   this.heap.push(value);
+  this.Heapify();
+}
+MinHeap.prototype.delete = function(value){
+  this.heap.forEach((item, idx) => {
+    if(item === value){
+      this.heap.splice(idx,1);
+    }
+  });
+  this.Heapify();
 }
 
 let x = new MinHeap();
@@ -33,5 +46,7 @@ max = Math.floor(100);
 for(let i=0;i<10;i++){
  x.insert(Math.floor(Math.random() * (max - min)) + min);
 }
-x.Heapify()
-console.log(x.heap)
+x.insert(10);
+console.log(x.heap);
+x.delete(10);
+console.log(x.heap);
